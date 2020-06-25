@@ -56,6 +56,13 @@ stages:
         projects: '**/*.csproj'
 
     - task: DotNetCoreCLI@2
+      displayName: 'run test'
+      inputs:
+        command: test
+        projects: '**/*Tests/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+    - task: DotNetCoreCLI@2
       displayName: 'Build the project - $(buildConfiguration)'
       inputs:
         command: 'build'
@@ -71,11 +78,7 @@ stages:
         arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
 
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: test
-        projects: '**/*Tests/*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+    
 
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
