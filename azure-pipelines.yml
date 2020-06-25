@@ -71,15 +71,6 @@ stages:
         arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
         zipAfterPublish: true
 
-    - task: VSTest@2
-        displayName: 'VsTest - testAssemblies'
-        inputs:
-          testAssemblyVer2: |
-            **\$(BuildConfiguration)\*test*.dll
-            !**\obj\**
-          platform: '$(BuildPlatform)'
-          configuration: '$(BuildConfiguration)'
-
     - publish: '$(Build.ArtifactStagingDirectory)'
       artifact: drop
 
